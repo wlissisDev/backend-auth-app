@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcryptjs';
 import { client } from "../utils/ClientPrisma";
+import jwt from 'jsonwebtoken';
+
 
 export async function CreateUser(request: Request, response: Response) {
     const { username, password } = request.body
@@ -19,6 +21,8 @@ export async function CreateUser(request: Request, response: Response) {
     }
 }
 
+
+
 export async function LoginUser(request: Request, response: Response) {
     const { username, password } = request.body
 
@@ -28,10 +32,20 @@ export async function LoginUser(request: Request, response: Response) {
             return response.json("User not found");
         }
         const passwordIsCorrect = await bcrypt.compare(password, existedUser.password);
-        if(!passwordIsCorrect){
-            return response.json("password is incorrect");
+        if (!passwordIsCorrect) {
+            return response.json("User not found");
         }
-        return response.json(existedUser);
+
+        const token = jwt.sign(
+            { 
+                id:existedUser.id,
+                username: existedUser.username 
+            },
+            `${process.env.SECRET_KEY}`,
+            { expiresIn: 2000 }
+        );
+
+        return response.json({token});
 
     } catch (error) {
         console.error("Error" + error)

@@ -4,4 +4,4 @@ import { CreateUser, LoginUser } from "../controllers/UserController";
 export const routes = Router();
 
 routes.post("/register",CreateUser);
-routes.post("/login", LoginUser)
+routes.post("/login", LoginUser);
