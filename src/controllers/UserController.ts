@@ -22,7 +22,6 @@ export async function CreateUser(request: Request, response: Response) {
 }
 
 
-
 export async function LoginUser(request: Request, response: Response) {
     const { username, password } = request.body
 
@@ -42,7 +41,7 @@ export async function LoginUser(request: Request, response: Response) {
                 username: existedUser.username 
             },
             `${process.env.SECRET_KEY}`,
-            { expiresIn: 2000 }
+            { expiresIn: "2h" }
         );
 
         return response.json({token});
