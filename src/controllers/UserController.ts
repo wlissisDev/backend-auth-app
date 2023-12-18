@@ -14,7 +14,7 @@ export async function CreateUser(request: Request, response: Response) {
         }
         const hashPassword = await bcrypt.hash(password, 10);
         const result = await client.user.create({ data: { username, password: hashPassword } });
-        return response.json(result)
+        return response.json("success")
 
     } catch (error) {
         console.error("Error" + error)
