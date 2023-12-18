@@ -7,6 +7,5 @@ export const routes = Router();
 routes.post("/register",CreateUser);
 routes.post("/login", LoginUser);
 routes.get("/products",Auth, (req, res)=>{
-
     return res.send("produtos")
 })
